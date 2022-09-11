@@ -16,11 +16,11 @@
 .create function Product() {Data_Product | project ProductKey, ['Product Code'], ['Product Name'], Manufacturer, Brand, Color, ['Weight Unit Measure'], Weight, ['Unit Cost'], ['Unit Price'], ['Subcategory Code'], Subcategory, ['Category Code'], Category}
 .create function Sales() {Data_Orders | join kind=leftouter Data_OrderRows on OrderKey | join kind=leftouter (Data_CurrencyExchange | where FromCurrency == 'USD') on $left.['Order Date'] == $right.Date, $left.['Currency Code'] == $right.ToCurrency | project ['Order Number'] = OrderKey, ['Line Number'], ['Order Date'], ['Delivery Date'], CustomerKey, StoreKey, ProductKey, Quantity, ['Unit Price'], ['Net Price'], ['Unit Cost'], ['Currency Code'], ['Exchange Rate'] = Exchange}
 .create function Store() {Data_Store | project StoreKey, ['Store Code'], Country, State, Name, ['Square Meters'], ['Open Date'], ['Close Date'], Status}
-.ingest into table ['Data_CurrencyExchange'] (h'https://link.depict.solutions/Contoso1M/Data_CurrencyExchange_1.parquet') with (format="parquet")
-.ingest into table ['Data_Customer'] (h'https://link.depict.solutions/Contoso1M/Data_Customer_1.parquet') with (format="parquet")
-.ingest into table ['Data_Date'] (h'https://link.depict.solutions/Contoso1M/Data_Date_1.parquet') with (format="parquet")
-.ingest into table ['Data_GeoLocations'] (h'https://link.depict.solutions/Contoso1M/Data_GeoLocations_1.parquet') with (format="parquet")
-.ingest into table ['Data_OrderRows'] (h'https://link.depict.solutions/Contoso1M/Data_OrderRows_1.parquet') with (format="parquet")
-.ingest into table ['Data_Orders'] (h'https://link.depict.solutions/Contoso1M/Data_Orders_1.parquet') with (format="parquet")
-.ingest into table ['Data_Product'] (h'https://link.depict.solutions/Contoso1M/Data_Product_1.parquet') with (format="parquet")
-.ingest into table ['Data_Store'] (h'https://link.depict.solutions/Contoso1M/Data_Store_1.parquet') with (format="parquet")
+.ingest into table ['Data_CurrencyExchange'] (h'https://depict.tiny.us/y5dunzvr/Data_CurrencyExchange_1.parquet') with (format="parquet")
+.ingest into table ['Data_Customer'] (h'https://depict.tiny.us/y5dunzvr/Data_Customer_1.parquet') with (format="parquet")
+.ingest into table ['Data_Date'] (h'https://depict.tiny.us/y5dunzvr/Data_Date_1.parquet') with (format="parquet")
+.ingest into table ['Data_GeoLocations'] (h'https://depict.tiny.us/y5dunzvr/Data_GeoLocations_1.parquet') with (format="parquet")
+.ingest into table ['Data_OrderRows'] (h'https://depict.tiny.us/y5dunzvr/Data_OrderRows_1.parquet') with (format="parquet")
+.ingest into table ['Data_Orders'] (h'https://depict.tiny.us/y5dunzvr/Data_Orders_1.parquet') with (format="parquet")
+.ingest into table ['Data_Product'] (h'https://depict.tiny.us/y5dunzvr/Data_Product_1.parquet') with (format="parquet")
+.ingest into table ['Data_Store'] (h'https://depict.tiny.us/y5dunzvr/Data_Store_1.parquet') with (format="parquet")
