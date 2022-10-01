@@ -22,16 +22,16 @@ The KQL functions come in both the original version, as per the SQLBI Contoso da
 
 ### Free cluster compatible
 
-- [Contoso 10K.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%2010K.kql)
-- [Contoso 100K.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%20100K.kql)
-- [Contoso 1M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%201M.kql)
-- [Contoso 10M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%2010M.kql)
-- [Contoso 100M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%20100M.kql) (non-perpetual version)
+- [Contoso 10K.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%2010K.kql)
+- [Contoso 100K.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%20100K.kql)
+- [Contoso 1M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%201M.kql)
+- [Contoso 10M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%2010M.kql)
+- [Contoso 100M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%20100M.kql) (non-perpetual version)
 
 ### Paid cluster required
 
-- [Contoso 100M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%20100M.kql) (perpetual version)
-- [Contoso 1G.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/raw/main/Scripts/Azure%20Data%20Explorer/Contoso%201G.kql)
+- [Contoso 100M.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%20100M.kql) (perpetual version)
+- [Contoso 1G.kql](https://github.com/samaguire/Sqlbi-Contoso-As-Parquet/blob/main/Scripts/Azure%20Data%20Explorer/Contoso%201G.kql)
 
 ### Table row counts
 
