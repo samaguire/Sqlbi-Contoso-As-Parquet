@@ -1,0 +1,8 @@
+(Data_CurrencyExchange | count);
+(Data_Customer | count);
+(['Date'] | count);
+(Data_GeoLocations | count);
+(Data_OrderRows | count);
+(Data_Orders | count);
+(Data_Product | count);
+(Data_Store | count)

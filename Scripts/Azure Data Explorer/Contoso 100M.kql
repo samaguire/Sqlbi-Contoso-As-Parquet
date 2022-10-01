@@ -1,4 +1,5 @@
-﻿.execute database script <|
+﻿// Contoso 100M
+.execute database script <|
 .drop tables (Data_CurrencyExchange, Data_Customer, Data_Date, Data_GeoLocations, Data_OrderRows, Data_Orders, Data_Product, Data_Store) ifexists
 .create tables
         Data_CurrencyExchange (Date: datetime, FromCurrency: string, ToCurrency: string, Exchange: real),
@@ -12,14 +13,18 @@
 .drop functions (['Currency Exchange'], Customer, Date, Product, Sales, Store) ifexists
 .create function ['Currency Exchange']() {Data_CurrencyExchange | project Date, FromCurrency, ToCurrency, Exchange}
 .create function Customer() {Data_Customer | project CustomerKey, Gender, Name = strcat(GivenName, ' ', Surname), Address = StreetAddress, City, ['State Code'] = State, State = StateFull, ['Zip Code'] = ZipCode, ['Country Code'] = Country, Country = CountryFull, Continent, Birthday, Age}
-.create function Date() {Data_Date | project Date, Year, ['Year Quarter'], ['Year Quarter Number'], Quarter, ['Year Month'], ['Year Month Short'], ['Year Month Number'], Month, ['Month Short'], ['Month Number'], ['Day of Week'], ['Day of Week Short'], ['Day of Week Number'], ['Working Day'], ['Working Day Number']}
+//.create function Date() {Data_Date | project Date, Year, ['Year Quarter'], ['Year Quarter Number'], Quarter, ['Year Month'], ['Year Month Short'], ['Year Month Number'], Month, ['Month Short'], ['Month Number'], ['Day of Week'], ['Day of Week Short'], ['Day of Week Number'], ['Working Day'], ['Working Day Number']}
+.create function Date() {let yearOffset = datetime_diff('year', now(), toscalar(Data_Date | summarize max(Date))); Data_Date | project Date = datetime_add('year', yearOffset, Date), Year = Year + yearOffset, ['Year Quarter'] = strcat(Quarter, '-', tostring(Year + yearOffset)), ['Year Quarter Number'], Quarter, ['Year Month'] = strcat(Month, ' ', tostring(Year + yearOffset)), ['Year Month Short'] = strcat(['Month Short'], ' ', tostring(Year + yearOffset)), ['Year Month Number'], Month, ['Month Short'], ['Month Number'], ['Day of Week'], ['Day of Week Short'], ['Day of Week Number'], ['Working Day'], ['Working Day Number']}
 .create function Product() {Data_Product | project ProductKey, ['Product Code'], ['Product Name'], Manufacturer, Brand, Color, ['Weight Unit Measure'], Weight, ['Unit Cost'], ['Unit Price'], ['Subcategory Code'], Subcategory, ['Category Code'], Category}
-.create function Sales() {Data_Orders | join kind=leftouter Data_OrderRows on OrderKey | join kind=leftouter (Data_CurrencyExchange | where FromCurrency == 'USD') on $left.['Order Date'] == $right.Date, $left.['Currency Code'] == $right.ToCurrency | project ['Order Number'] = OrderKey, ['Line Number'], ['Order Date'], ['Delivery Date'], CustomerKey, StoreKey, ProductKey, Quantity, ['Unit Price'], ['Net Price'], ['Unit Cost'], ['Currency Code'], ['Exchange Rate'] = Exchange}
+//.create function Sales() {Data_Orders | join kind=leftouter Data_OrderRows on OrderKey | join kind=leftouter (Data_CurrencyExchange | where FromCurrency == 'USD') on $left.['Order Date'] == $right.Date, $left.['Currency Code'] == $right.ToCurrency | project ['Order Number'] = OrderKey, ['Line Number'], ['Order Date'], ['Delivery Date'], CustomerKey, StoreKey, ProductKey, Quantity, ['Unit Price'], ['Net Price'], ['Unit Cost'], ['Currency Code'], ['Exchange Rate'] = Exchange}
+.create function Sales() {let dayOffset = datetime_diff('day', now(), toscalar(Data_Orders | summarize max(['Order Date']))); Data_Orders | join kind=leftouter Data_OrderRows on OrderKey | join kind=leftouter (Data_CurrencyExchange | where FromCurrency == 'USD') on $left.['Order Date'] == $right.Date, $left.['Currency Code'] == $right.ToCurrency | project ['Order Number'] = OrderKey, ['Line Number'], ['Order Date'] = datetime_add('day', dayOffset, ['Order Date']), ['Delivery Date'] = datetime_add('day', dayOffset, ['Delivery Date']), CustomerKey, StoreKey, ProductKey, Quantity, ['Unit Price'], ['Net Price'], ['Unit Cost'], ['Currency Code'], ['Exchange Rate'] = Exchange}
 .create function Store() {Data_Store | project StoreKey, ['Store Code'], Country, State, Name, ['Square Meters'], ['Open Date'], ['Close Date'], Status}
 .ingest into table Data_CurrencyExchange (h'https://depict.tiny.us/2p8hf7bs/Data_CurrencyExchange_1.parquet') with (format="parquet")
 .ingest into table Data_Customer (h'https://depict.tiny.us/2p8hf7bs/Data_Customer_1.parquet') with (format="parquet")
 .ingest into table Data_Date (h'https://depict.tiny.us/2p8hf7bs/Data_Date_1.parquet') with (format="parquet")
 .ingest into table Data_GeoLocations (h'https://depict.tiny.us/2p8hf7bs/Data_GeoLocations_1.parquet') with (format="parquet")
+.ingest into table Data_Product (h'https://depict.tiny.us/2p8hf7bs/Data_Product_1.parquet') with (format="parquet")
+.ingest into table Data_Store (h'https://depict.tiny.us/2p8hf7bs/Data_Store_1.parquet') with (format="parquet")
 .ingest into table Data_OrderRows (h'https://depict.tiny.us/2p8hf7bs/Data_OrderRows_1.parquet') with (format="parquet")
 .ingest into table Data_OrderRows (h'https://depict.tiny.us/2p8hf7bs/Data_OrderRows_2.parquet') with (format="parquet")
 .ingest into table Data_OrderRows (h'https://depict.tiny.us/2p8hf7bs/Data_OrderRows_3.parquet') with (format="parquet")
@@ -47,5 +52,3 @@
 .ingest into table Data_Orders (h'https://depict.tiny.us/2p8hf7bs/Data_Orders_6.parquet') with (format="parquet")
 .ingest into table Data_Orders (h'https://depict.tiny.us/2p8hf7bs/Data_Orders_7.parquet') with (format="parquet")
 .ingest into table Data_Orders (h'https://depict.tiny.us/2p8hf7bs/Data_Orders_8.parquet') with (format="parquet")
-.ingest into table Data_Product (h'https://depict.tiny.us/2p8hf7bs/Data_Product_1.parquet') with (format="parquet")
-.ingest into table Data_Store (h'https://depict.tiny.us/2p8hf7bs/Data_Store_1.parquet') with (format="parquet")
