@@ -1,8 +1,9 @@
-(Data_CurrencyExchange | count);
-(Data_Customer | count);
-(['Date'] | count);
-(Data_GeoLocations | count);
-(Data_OrderRows | count);
-(Data_Orders | count);
-(Data_Product | count);
-(Data_Store | count)
+Data_CurrencyExchange | count | extend Data = "Data_CurrencyExchange"
+| union (Data_Customer | count | extend Data = "Data_Customer")
+| union (Data_Date | count | extend Data = "Data_Date")
+| union (Data_GeoLocations | count | extend Data = "Data_GeoLocations")
+| union (Data_OrderRows | count | extend Data = "Data_OrderRows")
+| union (Data_Orders | count | extend Data = "Data_Orders")
+| union (Data_Product | count | extend Data = "Data_Product")
+| union (Data_Store | count | extend Data = "Data_Store")
+| project Data, Count | order by Data asc

@@ -23,11 +23,11 @@
 .create function ['Product Perpetual']() {Data_Product | project ProductKey, ['Product Code'], ['Product Name'], Manufacturer, Brand, Color, ['Weight Unit Measure'], Weight, ['Unit Cost'], ['Unit Price'], ['Subcategory Code'], Subcategory, ['Category Code'], Category}
 .create function ['Sales Perpetual']() {let maxDate = toscalar(Data_Orders | summarize max(['Order Date'])); let dayOffset = datetime_diff('day', now(), maxDate); Data_Orders | join kind=leftouter Data_OrderRows on OrderKey | join kind=leftouter (Data_CurrencyExchange | where FromCurrency == 'USD') on $left.['Order Date'] == $right.Date, $left.['Currency Code'] == $right.ToCurrency | project ['Order Number'] = OrderKey, ['Line Number'], ['Order Date'] = datetime_add('day', dayOffset, ['Order Date']), ['Delivery Date'] = datetime_add('day', dayOffset, ['Delivery Date']), CustomerKey, StoreKey, ProductKey, Quantity, ['Unit Price'], ['Net Price'], ['Unit Cost'], ['Currency Code'], ['Exchange Rate'] = Exchange}
 .create function ['Store Perpetual']() {let maxDate = toscalar(Data_Orders | summarize max(['Order Date'])); let yearOffset = datetime_diff('year', now(), maxDate); Data_Store | project StoreKey, ['Store Code'], Country, State, Name, ['Square Meters'], ['Open Date'] = datetime_add('year', yearOffset, ['Open Date']), ['Close Date'] = datetime_add('year', yearOffset, ['Close Date']), Status}
-.ingest into table Data_CurrencyExchange (h'https://depict.tiny.us/yh2scu5k/Data_CurrencyExchange_1.parquet') with (format="parquet")
-.ingest into table Data_Customer (h'https://depict.tiny.us/yh2scu5k/Data_Customer_1.parquet') with (format="parquet")
-.ingest into table Data_Date (h'https://depict.tiny.us/yh2scu5k/Data_Date_1.parquet') with (format="parquet")
-.ingest into table Data_GeoLocations (h'https://depict.tiny.us/yh2scu5k/Data_GeoLocations_1.parquet') with (format="parquet")
-.ingest into table Data_OrderRows (h'https://depict.tiny.us/yh2scu5k/Data_OrderRows_1.parquet') with (format="parquet")
-.ingest into table Data_Orders (h'https://depict.tiny.us/yh2scu5k/Data_Orders_1.parquet') with (format="parquet")
-.ingest into table Data_Product (h'https://depict.tiny.us/yh2scu5k/Data_Product_1.parquet') with (format="parquet")
-.ingest into table Data_Store (h'https://depict.tiny.us/yh2scu5k/Data_Store_1.parquet') with (format="parquet")
+.ingest into table Data_CurrencyExchange (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_CurrencyExchange_1.parquet') with (format="parquet")
+.ingest into table Data_Customer (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_Customer_1.parquet') with (format="parquet")
+.ingest into table Data_Date (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_Date_1.parquet') with (format="parquet")
+.ingest into table Data_GeoLocations (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_GeoLocations_1.parquet') with (format="parquet")
+.ingest into table Data_OrderRows (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_OrderRows_1.parquet') with (format="parquet")
+.ingest into table Data_Orders (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_Orders_1.parquet') with (format="parquet")
+.ingest into table Data_Product (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_Product_1.parquet') with (format="parquet")
+.ingest into table Data_Store (h'https://raw.githubusercontent.com/samaguire/Sqlbi-Contoso-As-Parquet/main/Contoso%2010M/Data_Store_1.parquet') with (format="parquet")
